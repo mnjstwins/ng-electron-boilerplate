@@ -21,7 +21,9 @@ app.on('ready', function () {
 
     mainWindow.loadUrl('file://' + __dirname + '/index.html');
 
-    mainWindow.openDevTools();
+    mainWindow.openDevTools({
+      detach: true
+    });
 
     mainWindow.webContents.on('did-finish-load', function () {
         mainWindow.setTitle(app.getName());

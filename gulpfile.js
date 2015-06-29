@@ -14,7 +14,8 @@ var path = {
   outputFolder: 'dist/',
   indexFile: './src/index.html',
   mainFile: './src/main.js',
-  manifestFile: './package.json'
+  manifestFile: './package.json',
+  less: ['src/**/*.less']
 };
 
 var babelCompilerOptions = {
@@ -24,6 +25,7 @@ var babelCompilerOptions = {
 taskMaker.defineTask('clean', {taskName: 'clean', src: path.outputFolder});
 taskMaker.defineTask('babel', {taskName: 'babel', src: path.sourceFolder,
   dest: path.outputFolder, ngAnnotate: true, compilerOptions: babelCompilerOptions});
+taskMaker.defineTask('less', {taskName: 'less', src: path.less, dest: path.outputFolder});
 taskMaker.defineTask('copy', {taskName: 'copyMain', src: path.mainFile,
 dest: path.outputFolder});
 taskMaker.defineTask('copy', {taskName: 'copyManifest', src: path.manifestFile,
@@ -38,7 +40,7 @@ gulp.task('usemin', function(callback) {
 });
 
 gulp.task('baseCompile', function(callback) {
-	return runSequence('babel', 'usemin', callback);
+	return runSequence('babel', 'usemin', 'less', callback);
 });
 
 gulp.task('electronCompile', function(callback) {
